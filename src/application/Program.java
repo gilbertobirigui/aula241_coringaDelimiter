@@ -6,6 +6,8 @@ package application;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import static java.util.Collections.copy;
 import java.util.List;
 
 /**
@@ -17,50 +19,48 @@ public class Program {
     
     public static void main(String[] args){
         
-        // agora criar lista object que pode ser qualquer tipo
-        List<Object> myObjs = new ArrayList<>();
-        myObjs.add("Maria");  // String sub tipo de object
-        myObjs.add("Alex");
-      
-        
-        
-        /* vou declarar uma lista myNums
-        do tipo ? qualquer tipo super Number
-        ou seja 
-        pode ser Number ou qualquer tipo super Number no caso Object
-        
-                                   object
-                                     |
-        ----------------------------------------------------------
-        |                            |                           |
-        NUMBER                      BOOLEAN                  CHARACTER
-          |
-          |
-        --------------------------------------------------------
-           |           |         |        |         |          |
-        Integer      Byte       Long     Shot      Float      Double
-        
-        
-        
-        */
-        
-        List<? super Number> myNums = myObjs;
-        
-        myNums.add(10);
-        myNums.add(3.14);   // posso add qualquer tipo number tipo - int double float etc
-    
-        // tambem posso add qualquer tipo Object - String
-        // so que nao posso acessar 
-        
-        // erro de compilaçao
-        Number x = myNums.get(0);      
+       List<Integer> myInts = Arrays.asList(1 , 2, 3, 4);
+       List<Double> myDouble = Arrays.asList(3.14, 6.28);
+       List<Object> myObjs = new ArrayList<Object>();
        
-        // eu nao passo acessar minha lista e guardar na minha variavel do tipo Number
-        // porque o tipo dessa lista pode ser um tipo ser tipo super tipo de Number
+       
+       copy(myInts, myObjs);   // metodo copy
+       printList(myObjs);
+       
+       
+       copy(myDouble,myObjs);
+        printList(myObjs);
+       
+     
+     
      
     }
     
+      // a lista de origem vai ser de qualquer tipo numerico ? extends de number  === source = origem
+       
+       // lista de destino poder ser lista mais generic LIST(OBJECT)
+                                                              // contravariancia posso add
+      public static void copy(List<? extends Number> source, List< ? super Number> destiny){
+           // como vou fazer para copiar
+           // fazer um for
+           // para cada NUMBER apelido : da lista de origem 
+           for (Number number : source){
+               destiny.add(number);
+           }
+           
+       }
     
+      
+      
+      // imprimir a lista
+      public static void printList(List<?> list){
+          for (Object obj : list){
+              System.out.print(obj + " ");
+          }
+           System.out.println();
+          
+      }
+      
     
     
     
